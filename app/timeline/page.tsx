@@ -7,6 +7,7 @@ import { Heart, Calendar, Upload } from "lucide-react"
 import { Header } from "@/components/header"
 import { FloatingHearts } from "@/components/floating-hearts"
 import { MusicToggle } from "@/components/music-toggle"
+import { SubAlbumTimeline } from "@/components/sub-album-timeline"
 import { Button } from "@/components/ui/button"
 import { buildTimeline, type TimelineGroup } from "@/lib/data"
 import { cn } from "@/lib/utils"
@@ -151,6 +152,7 @@ function EmptyTimeline() {
 
 export default function TimelinePage() {
   const { photos, isLoading } = usePhotos()
+  const [viewMode, setViewMode] = useState<"albums" | "photos">("albums")
 
   const timelineData = useMemo(() => buildTimeline(photos), [photos])
   const years = useMemo(() => timelineData.map((g) => g.year), [timelineData])
@@ -178,69 +180,95 @@ export default function TimelinePage() {
           </p>
         </div>
 
-        {/* Year filter */}
-        {!isLoading && years.length > 0 && (
-          <div className="sticky top-16 z-30 mb-12 flex items-center justify-center gap-2 bg-background/80 py-3 backdrop-blur-sm">
-            <Button
-              variant={selectedYear === "all" ? "default" : "outline"}
-              size="sm"
-              className="rounded-full"
-              onClick={() => setSelectedYear("all")}
-            >
-              Tất cả
-            </Button>
-            {years.map((year) => (
-              <Button
-                key={year}
-                variant={selectedYear === year ? "default" : "outline"}
-                size="sm"
-                className="rounded-full"
-                onClick={() => setSelectedYear(year)}
-              >
-                {year}
-              </Button>
-            ))}
-          </div>
+        {/* View Mode Tabs */}
+        <div className="mb-8 flex justify-center gap-4">
+          <Button
+            onClick={() => setViewMode("albums")}
+            variant={viewMode === "albums" ? "default" : "outline"}
+          >
+            Album
+          </Button>
+          <Button
+            onClick={() => setViewMode("photos")}
+            variant={viewMode === "photos" ? "default" : "outline"}
+          >
+            Ảnh
+          </Button>
+        </div>
+
+        {/* Albums View */}
+        {viewMode === "albums" && (
+          <SubAlbumTimeline userId="user-default" />
         )}
 
-        {/* Content */}
-        {isLoading ? (
-          <LoadingSkeleton />
-        ) : timelineData.length === 0 ? (
-          <EmptyTimeline />
-        ) : (
-          <div className="relative">
-            <div className="absolute left-0 top-0 h-full w-0.5 bg-border md:left-1/2 md:-translate-x-px" />
+        {/* Photos View */}
+        {viewMode === "photos" && (
+          <>
+            {/* Year filter */}
+            {!isLoading && years.length > 0 && (
+              <div className="sticky top-16 z-30 mb-12 flex items-center justify-center gap-2 bg-background/80 py-3 backdrop-blur-sm">
+                <Button
+                  variant={selectedYear === "all" ? "default" : "outline"}
+                  size="sm"
+                  className="rounded-full"
+                  onClick={() => setSelectedYear("all")}
+                >
+                  Tất cả
+                </Button>
+                {years.map((year) => (
+                  <Button
+                    key={year}
+                    variant={selectedYear === year ? "default" : "outline"}
+                    size="sm"
+                    className="rounded-full"
+                    onClick={() => setSelectedYear(year)}
+                  >
+                    {year}
+                  </Button>
+                ))}
+              </div>
+            )}
 
-            {filteredGroups.map((group) => (
-              <div key={group.year} className="relative mb-16 pl-8 md:pl-0">
-                <div className="mb-8 flex justify-center">
-                  <span className="relative z-10 rounded-full bg-primary px-6 py-2 font-serif text-lg font-bold text-primary-foreground shadow-md">
-                    {group.year}
-                  </span>
-                </div>
-                <div className="flex flex-col gap-10">
-                  {group.events.map((event, idx) => {
-                    const currentGlobalIndex = globalIndex++
-                    return (
-                      <TimelineCard
-                        key={`${event.date}-${idx}`}
-                        event={event}
-                        index={idx}
-                        isLeft={currentGlobalIndex % 2 === 0}
-                      />
-                    )
-                  })}
+            {/* Content */}
+            {isLoading ? (
+              <LoadingSkeleton />
+            ) : timelineData.length === 0 ? (
+              <EmptyTimeline />
+            ) : (
+              <div className="relative">
+                <div className="absolute left-0 top-0 h-full w-0.5 bg-border md:left-1/2 md:-translate-x-px" />
+
+                {filteredGroups.map((group) => (
+                  <div key={group.year} className="relative mb-16 pl-8 md:pl-0">
+                    <div className="mb-8 flex justify-center">
+                      <span className="relative z-10 rounded-full bg-primary px-6 py-2 font-serif text-lg font-bold text-primary-foreground shadow-md">
+                        {group.year}
+                      </span>
+                    </div>
+                    <div className="flex flex-col gap-10">
+                      {group.events.map((event, idx) => {
+                        const currentGlobalIndex = globalIndex++
+                        return (
+                          <TimelineCard
+                            key={`${event.date}-${idx}`}
+                            event={event}
+                            index={idx}
+                            isLeft={currentGlobalIndex % 2 === 0}
+                          />
+                        )
+                      })}
+                    </div>
+                  </div>
+                ))}
+
+                <div className="flex justify-center">
+                  <div className="relative z-10 flex size-14 items-center justify-center rounded-full border-2 border-primary bg-card shadow-md">
+                    <Heart className="size-6 animate-pulse fill-primary text-primary" />
+                  </div>
                 </div>
               </div>
-            ))}
-
-            <div className="flex justify-center">
-              <div className="relative z-10 flex size-14 items-center justify-center rounded-full border-2 border-primary bg-card shadow-md">
-                <Heart className="size-6 animate-pulse fill-primary text-primary" />
-              </div>
-            </div>
-          </div>
+            )}
+          </>
         )}
       </main>
 

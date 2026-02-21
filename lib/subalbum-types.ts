@@ -25,6 +25,7 @@ export interface SubAlbum {
   visibility: "private" | "link" | "public"
   cover_image_id?: string
   cover_image?: Image
+  images?: Image[]
   created_at: string
   updated_at: string
   created_by: string

@@ -196,7 +196,7 @@ function GalleryModal({
             onClick={onPrev}
             disabled={!hasPrev}
             className="size-10 rounded-full bg-card/20 text-card backdrop-blur-sm hover:bg-card/40 disabled:opacity-30"
-            aria-label="Anh truoc"
+            aria-label="Ảnh trước"
           >
             <ChevronLeft className="size-5" />
           </Button>
@@ -206,7 +206,7 @@ function GalleryModal({
             onClick={onNext}
             disabled={!hasNext}
             className="size-10 rounded-full bg-card/20 text-card backdrop-blur-sm hover:bg-card/40 disabled:opacity-30"
-            aria-label="Anh tiep"
+            aria-label="Ảnh tiếp"
           >
             <ChevronRight className="size-5" />
           </Button>
@@ -335,7 +335,7 @@ export default function GalleryPage() {
             <div className="relative w-full max-w-xs">
               <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
               <Input
-                placeholder="Tim kiem ky niem..."
+                placeholder="Tìm kiếm kỷ niệm..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="rounded-full border-border bg-card pl-10"
@@ -353,7 +353,7 @@ export default function GalleryPage() {
                   onClick={() => setFilter(f)}
                 >
                   {f === "all" ? (
-                    "Tat ca"
+                    "Tất cả"
                   ) : f === "favorite" ? (
                     <span className="flex items-center gap-1">
                       <Star className="size-3" /> Yêu thích
@@ -379,7 +379,7 @@ export default function GalleryPage() {
                 ) : (
                   <Play className="mr-1 size-3" />
                 )}
-                {slideshow ? "Dung" : "Trinh chieu"}
+                {slideshow ? "Dừng" : "Trình chiếu"}
               </Button>
             </div>
           </div>

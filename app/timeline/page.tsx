@@ -187,7 +187,7 @@ export default function TimelinePage() {
               className="rounded-full"
               onClick={() => setSelectedYear("all")}
             >
-              Tat ca
+              Tất cả
             </Button>
             {years.map((year) => (
               <Button

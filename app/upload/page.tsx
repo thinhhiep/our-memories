@@ -64,15 +64,15 @@ function PasswordGate({ onUnlock }: { onUnlock: () => void }) {
           </div>
         </div>
         <h2 className="mb-2 font-serif text-2xl font-bold text-foreground">
-          Khu vuc rieng tu
+          Khu vực riêng tư
         </h2>
         <p className="mb-6 text-sm text-muted-foreground">
-          Nhap mat khau de truy cap khu vuc upload
+          Nhập mật khẩu để truy cập khu vực upload
         </p>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <Input
             type="password"
-            placeholder="Nhap mat khau..."
+            placeholder="Nhập mật khẩu..."
             value={password}
             onChange={(e) => {
               setPassword(e.target.value)
@@ -86,14 +86,14 @@ function PasswordGate({ onUnlock }: { onUnlock: () => void }) {
           />
           {error && (
             <p className="text-xs text-destructive">
-              Mat khau khong dung. Thu lai nhe!
+              Mật khẩu không đúng. Thử lại nhé!
             </p>
           )}
           <Button type="submit" className="rounded-xl">
             <Heart className="mr-2 size-4" />
-            Mo khoa
+            Mở khóa
           </Button>
-          <p className="text-xs text-muted-foreground/60">Goi y: yeuem</p>
+          <p className="text-xs text-muted-foreground/60">Gợi ý: yeuem</p>
         </form>
       </div>
     </div>
@@ -197,7 +197,7 @@ function UploadArea() {
       console.error("Upload error:", err)
       setUploading(false)
       setUploadError(
-        err instanceof Error ? err.message : "Upload failed. Please try again."
+        err instanceof Error ? err.message : "Tải lên thất bại. Vui lòng thử lại."
       )
     }
   }
@@ -236,16 +236,16 @@ function UploadArea() {
           />
         </div>
         <p className="mb-1 text-base font-medium text-foreground">
-          {isDragging ? "Tha anh vao day" : "Keo tha anh vao day"}
+          {isDragging ? "Thả ảnh vào đây" : "Kéo thả ảnh vào đây"}
         </p>
-        <p className="mb-4 text-sm text-muted-foreground">hoac</p>
+        <p className="mb-4 text-sm text-muted-foreground">hoặc</p>
         <Button
           variant="outline"
           className="rounded-full"
           onClick={() => inputRef.current?.click()}
         >
           <Upload className="mr-2 size-4" />
-          Chon anh tu thiet bi
+          Chọn ảnh từ thiết bị
         </Button>
       </div>
 
@@ -253,7 +253,7 @@ function UploadArea() {
       {files.length > 0 && (
         <div className="mb-8">
           <h3 className="mb-4 font-serif text-lg font-semibold text-foreground">
-            Anh da chon ({files.length})
+            Ảnh đã chọn ({files.length})
           </h3>
           <div className="grid gap-4 sm:grid-cols-2">
             {files.map((file) => (
@@ -283,7 +283,7 @@ function UploadArea() {
                   <div className="flex items-center gap-2">
                     <FileText className="size-4 shrink-0 text-muted-foreground" />
                     <Input
-                      placeholder="Ghi chu cho anh..."
+                      placeholder="Ghi chú cho ảnh..."
                       value={file.caption}
                       onChange={(e) =>
                         updateFile(file.id, "caption", e.target.value)
@@ -333,7 +333,7 @@ function UploadArea() {
                 className="h-2.5 rounded-full"
               />
               <p className="mt-2 text-center text-sm text-muted-foreground">
-                {"Dang tai len... "}
+                {"Đang tải lên... "}
                 {Math.min(Math.round(uploadProgress), 100)}%
               </p>
             </div>
@@ -344,7 +344,7 @@ function UploadArea() {
               className="rounded-full px-8"
             >
               <Upload className="mr-2 size-4" />
-              Luu ky niem
+              Lưu kỷ niệm
             </Button>
           )}
         </div>
@@ -360,7 +360,7 @@ function UploadArea() {
             className="mt-2 rounded-full"
             onClick={() => setUploadError(null)}
           >
-            Thu lai
+            Thử lại
           </Button>
         </div>
       )}
@@ -372,10 +372,10 @@ function UploadArea() {
             <CheckCircle2 className="size-8 text-primary" />
           </div>
           <h3 className="font-serif text-xl font-semibold text-foreground">
-            Da luu thanh cong!
+            Đã lưu thành công!
           </h3>
           <p className="text-sm text-muted-foreground">
-            Ky niem moi da duoc them vao bo suu tap
+            Kỷ niệm mới đã được thêm vào bộ sưu tập
           </p>
           <div className="mt-2 flex items-center gap-3">
             <Button
@@ -387,12 +387,12 @@ function UploadArea() {
                 setUploadProgress(0)
               }}
             >
-              Them anh moi
+              Thêm ảnh mới
             </Button>
             <Button asChild className="rounded-full">
               <Link href="/gallery">
                 <ImageIcon className="mr-2 size-4" />
-                Xem bo suu tap
+                Xem bộ sưu tập
               </Link>
             </Button>
           </div>
@@ -413,10 +413,10 @@ export default function UploadPage() {
       <main className="relative z-10 mx-auto max-w-7xl px-4 pt-24 pb-16">
         <div className="mb-8 text-center">
           <h1 className="font-serif text-4xl font-bold text-foreground sm:text-5xl">
-            Them ky niem
+            Thêm kỷ niệm
           </h1>
           <p className="mt-2 text-muted-foreground">
-            Luu giu them nhung khoanh khac dep
+            Lưu giữ thêm những khoảnh khắc đẹp
           </p>
         </div>
 
